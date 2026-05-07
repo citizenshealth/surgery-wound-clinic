@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Citizens Health Surgery & Wound Clinic – Today's Providers</title>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Barlow+Condensed:wght@600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --blue-primary: #075da6;
+    --blue-secondary: #64c2dc;
+    --white: #ffffff;
+    --black: #111111;
+    --gray-light: #f0f4f8;
+    --gray-mid: #dce6ef;
+    --text-muted: #4a6278;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html, body {
+    width: 1080px;
+    height: 1920px;
+    overflow: hidden;
+    background: var(--white);
+    font-family: 'Oswald', sans-serif;
+    color: var(--black);
+  }
+
+  .screen {
+    width: 1080px;
+    height: 1920px;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* ─── HEADER ─────────────────────────────────────── */
+  .header {
+    background: var(--blue-primary);
+    padding: 36px 60px 32px;
+    flex-shrink: 0;
+  }
+
+  .header-label {
+    font-family: 'Oswald', sans-serif;
+    font-weight: 400;
+    font-size: 28px;
+    color: var(--blue-secondary);
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+
+  .header-date {
+    font-family: 'Oswald', sans-serif;
+    font-weight: 700;
+    font-size: 80px;
+    color: var(--white);
+    line-height: 1;
+    letter-spacing: 0.01em;
+  }
+
+  /* ─── ACCENT BAR ─────────────────────────────────── */
+  .accent-bar {
+    height: 10px;
+    background: linear-gradient(90deg, var(--blue-secondary) 0%, var(--blue-primary) 100%);
+    flex-shrink: 0;
+  }
+
+  /* ─── BODY ───────────────────────────────────────── */
+  .body {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    padding: 48px 60px 40px;
+    overflow: hidden;
+    min-height: 0;
+  }
+
+  /* ─── SECTION HEADERS ────────────────────────────── */
+  .section-label {
+    font-family: 'Oswald', sans-serif;
+    font-weight: 600;
+    font-size: 26px;
+    letter-spacing: 0.20em;
+    text-transform: uppercase;
+    color: var(--blue-primary);
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .section-label::after {
+    content: '';
+    flex: 1;
+    height: 2px;
+    background: var(--gray-mid);
+  }
+
+  /* ─── PROVIDER CARDS ─────────────────────────────── */
+  .cards-section {
+    flex: 1 1 0;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    min-height: 0;
+    overflow: hidden;
+  }
+
+  .provider-card {
+    background: var(--gray-light);
+    border-left: 10px solid var(--blue-primary);
+    border-radius: 0 16px 16px 0;
+    padding: 28px 44px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    flex: 1 1 0;
+    min-height: 120px;
+    position: relative;
+    overflow: hidden;
+    animation: cardIn 0.5s ease both;
+  }
+
+  .provider-card::before {
+    content: '';
+    position: absolute;
+    top: 0; right: 0;
+    width: 200px; height: 100%;
+    background: linear-gradient(270deg, rgba(100,194,220,0.08) 0%, transparent 100%);
+    pointer-events: none;
+  }
+
+  .provider-card.wound {
+    border-left-color: #1a7a5e;
+  }
+
+  .provider-card.wound .card-specialty {
+    color: #1a7a5e;
+  }
+
+  .card-specialty {
+    font-family: 'Oswald', sans-serif;
+    font-weight: 400;
+    font-size: 30px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--blue-secondary);
+    margin-bottom: 6px;
+    line-height: 1;
+  }
+
+  .card-name {
+    font-family: 'Oswald', sans-serif;
+    font-weight: 700;
+    color: var(--black);
+    line-height: 1.0;
+    letter-spacing: 0.01em;
+  }
+
+  /* ─── DIVIDER BETWEEN SECTIONS ───────────────────── */
+  .section-gap {
+    height: 32px;
+    flex-shrink: 0;
+  }
+
+  /* ─── NO CLINIC ──────────────────────────────────── */
+  .no-clinic {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 24px;
+    text-align: center;
+  }
+
+  .no-clinic-title {
+    font-family: 'Oswald', sans-serif;
+    font-weight: 700;
+    font-size: 72px;
+    color: var(--black);
+    letter-spacing: 0.01em;
+    line-height: 1;
+  }
+
+  .no-clinic-sub {
+    font-family: 'Oswald', sans-serif;
+    font-weight: 400;
+    font-size: 28px;
+    color: var(--text-muted);
+    max-width: 640px;
+    letter-spacing: 0.04em;
+  }
+
+  /* ─── CLOCK ──────────────────────────────────────── */
+  .clock-strip {
+    background: var(--blue-primary);
+    padding: 18px 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .clock-time {
+    font-family: 'Oswald', sans-serif;
+    font-weight: 600;
+    font-size: 44px;
+    color: var(--white);
+    letter-spacing: 0.06em;
+  }
+
+  /* ─── ANIMATION ──────────────────────────────────── */
+  @keyframes cardIn {
+    from { opacity: 0; transform: translateX(-24px); }
+    to   { opacity: 1; transform: translateX(0); }
+  }
+</style>
+</head>
+<body>
+<div class="screen" id="screen"></div>
+
+<script>
+// ═══════════════════════════════════════════════════════════════
+//  SCHEDULE LOGIC
+//  This display uses day-of-week and week-of-month rules
+//  rather than hard-coded dates, so it never needs updating.
+//
+//  Rules:
+//  Dr. Kopriva   — Surgery — Mon (weeks 1, 2, 5), Tue, Fri
+//  Dr. Budi      — Surgery — Tue, Wed, Thu, Fri
+//  Dr. Gabel     — Surgery — First Friday of the month
+//  Tina Benson   — Wound  — Every Monday
+//  Allie Keller  — Wound  — Every Thursday
+// ═══════════════════════════════════════════════════════════════
+
+function pad(n) { return String(n).padStart(2, '0'); }
+
+function getWeekOfMonth(date) {
+  // Which occurrence of this weekday in the month (1st, 2nd, 3rd...)
+  return Math.ceil(date.getDate() / 7);
+}
+
+function isLastWeekOfMonth(date) {
+  const next = new Date(date);
+  next.setDate(date.getDate() + 7);
+  return next.getMonth() !== date.getMonth();
+}
+
+function isFirstOccurrence(date) {
+  return getWeekOfMonth(date) === 1;
+}
+
+function getProviders(date) {
+  const dow = date.getDay(); // 0=Sun, 1=Mon, 2=Tue, 3=Wed, 4=Thu, 5=Fri, 6=Sat
+  const week = getWeekOfMonth(date);
+  const isLastWeek = isLastWeekOfMonth(date);
+
+  const surgery = [];
+  const wound = [];
+
+  // ── SURGERY PROVIDERS ───────────────────────────────
+  // Dr. Kopriva: Mon weeks 1, 2, 5 — every Tue — every Fri
+  const koprMondays = [1, 2]; // always weeks 1 & 2
+  if (dow === 1 && (koprMondays.includes(week) || isLastWeek)) {
+    surgery.push({ name: "Dr. Kopriva", specialty: "Surgery Clinic" });
+  }
+  if (dow === 2 || dow === 5) {
+    surgery.push({ name: "Dr. Kopriva", specialty: "Surgery Clinic" });
+  }
+
+  // Dr. Budi: every Tue, Wed, Thu, Fri
+  if (dow >= 2 && dow <= 5) {
+    surgery.push({ name: "Dr. Budi", specialty: "Surgery Clinic" });
+  }
+
+  // Dr. Gabel: first Friday of the month
+  if (dow === 5 && isFirstOccurrence(date)) {
+    surgery.push({ name: "Dr. Gabel", specialty: "Surgery Clinic" });
+  }
+
+  // ── WOUND PROVIDERS ─────────────────────────────────
+  // Tina Benson: every Monday
+  if (dow === 1) {
+    wound.push({ name: "Tina Benson, APRN, FNP-C", specialty: "Wound Clinic" });
+  }
+
+  // Allie Keller: every Thursday
+  if (dow === 4) {
+    wound.push({ name: "Allie Keller, PA-C", specialty: "Wound Clinic" });
+  }
+
+  return { surgery, wound };
+}
+
+function formatDate(date) {
+  const days   = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+  const months = ['January','February','March','April','May','June',
+                  'July','August','September','October','November','December'];
+  return {
+    dow:   days[date.getDay()],
+    month: months[date.getMonth()],
+    day:   date.getDate(),
+  };
+}
+
+function updateClock() {
+  const el = document.getElementById('clock');
+  if (!el) return;
+  const now = new Date();
+  let h = now.getHours(), m = now.getMinutes();
+  const ampm = h >= 12 ? 'PM' : 'AM';
+  h = h % 12 || 12;
+  el.textContent = `${h}:${pad(m)} ${ampm}`;
+}
+
+function fontSizeForCount(n) {
+  if (n <= 2) return '96px';
+  if (n <= 4) return '80px';
+  if (n <= 6) return '66px';
+  if (n <= 8) return '54px';
+  return '44px';
+}
+
+function renderCards(providers, isWound, fontSize, startDelay) {
+  return providers.map((p, i) => `
+    <div class="provider-card ${isWound ? 'wound' : ''}" style="animation-delay:${(startDelay + i) * 0.07}s">
+      <div class="card-specialty">${p.specialty}</div>
+      <div class="card-name" style="font-size:${fontSize}">${p.name}</div>
+    </div>
+  `).join('');
+}
+
+function render() {
+  const today = new Date();
+  const fmt = formatDate(today);
+  const { surgery, wound } = getProviders(today);
+  const total = surgery.length + wound.length;
+  const screen = document.getElementById('screen');
+
+  const headerHTML = `
+    <div class="header">
+      <div class="header-label">Providers Seeing Patients Today</div>
+      <div class="header-date">${fmt.dow}, ${fmt.month} ${fmt.day}</div>
+    </div>
+    <div class="accent-bar"></div>
+  `;
+
+  let bodyHTML = '';
+
+  if (total === 0) {
+    bodyHTML = `
+      <div class="body">
+        <div class="no-clinic">
+          <div class="no-clinic-title">No Clinic Today</div>
+          <div class="no-clinic-sub">The surgery and wound clinic is not scheduled today.</div>
+        </div>
+      </div>
+    `;
+  } else {
+    const fontSize = fontSizeForCount(total);
+    let sectionsHTML = '';
+
+    if (surgery.length > 0) {
+      sectionsHTML += `<div class="section-label">Surgery Clinic</div>`;
+      sectionsHTML += `<div class="cards-section">${renderCards(surgery, false, fontSize, 0)}</div>`;
+    }
+
+    if (surgery.length > 0 && wound.length > 0) {
+      sectionsHTML += `<div class="section-gap"></div>`;
+    }
+
+    if (wound.length > 0) {
+      sectionsHTML += `<div class="section-label">Wound Clinic</div>`;
+      sectionsHTML += `<div class="cards-section">${renderCards(wound, true, fontSize, surgery.length)}</div>`;
+    }
+
+    bodyHTML = `<div class="body">${sectionsHTML}</div>`;
+  }
+
+  const clockHTML = `
+    <div class="clock-strip">
+      <span class="clock-time" id="clock">--:-- --</span>
+    </div>
+  `;
+
+  screen.innerHTML = headerHTML + bodyHTML + clockHTML;
+
+  updateClock();
+  setInterval(updateClock, 30000);
+
+  // Refresh at midnight
+  const now = new Date();
+  const msUntilMidnight = new Date(now.getFullYear(), now.getMonth(), now.getDate()+1, 0, 0, 5).getTime() - now.getTime();
+  setTimeout(() => { location.reload(); }, msUntilMidnight);
+}
+
+render();
+</script>
+</body>
+</html>
