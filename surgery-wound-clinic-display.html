@@ -225,21 +225,42 @@
 <script>
 // ═══════════════════════════════════════════════════════════════
 //  SCHEDULE LOGIC
-//  This display uses day-of-week and week-of-month rules
-//  rather than hard-coded dates, so it never needs updating.
 //
-//  Rules:
 //  Dr. Kopriva   — Surgery — Mon (weeks 1, 2, 5), Tue, Fri
-//  Dr. Budi      — Surgery — Tue, Wed, Thu, Fri
-//  Dr. Gabel     — Surgery — First Friday of the month
+//  Dr. Budi      — Surgery — Tue, Wed, Thu, Fri (through July 31, 2026 only)
+//  Dr. Gabel     — Surgery — First Friday of month (ongoing)
+//                            + specific dates below (Aug–Dec 2026)
 //  Tina Benson   — Wound  — Every Monday
 //  Allie Keller  — Wound  — Every Thursday
+//
+//  DR. GABEL SPECIFIC DATES (clinic days only — OR-only days excluded):
+//  Aug 14 (AM OR / PM Clinic), Aug 24 (PM Clinic), Aug 27 (PM Clinic)
+//  Sep 9, Sep 23, Oct 21, Oct 28
+//  Nov 11, Nov 25, Dec 2, Dec 16
 // ═══════════════════════════════════════════════════════════════
+
+// Hard-coded Dr. Gabel clinic dates (YYYY-MM-DD)
+const GABEL_CLINIC_DATES = new Set([
+  "2026-08-14",
+  "2026-08-24",
+  "2026-08-27",
+  "2026-09-09",
+  "2026-09-23",
+  "2026-10-21",
+  "2026-10-28",
+  "2026-11-11",
+  "2026-11-25",
+  "2026-12-02",
+  "2026-12-16",
+]);
 
 function pad(n) { return String(n).padStart(2, '0'); }
 
+function dateKey(date) {
+  return `${date.getFullYear()}-${pad(date.getMonth()+1)}-${pad(date.getDate())}`;
+}
+
 function getWeekOfMonth(date) {
-  // Which occurrence of this weekday in the month (1st, 2nd, 3rd...)
   return Math.ceil(date.getDate() / 7);
 }
 
@@ -257,13 +278,15 @@ function getProviders(date) {
   const dow = date.getDay(); // 0=Sun, 1=Mon, 2=Tue, 3=Wed, 4=Thu, 5=Fri, 6=Sat
   const week = getWeekOfMonth(date);
   const isLastWeek = isLastWeekOfMonth(date);
+  const key = dateKey(date);
+  const budiEndDate = new Date("2026-08-01"); // Dr. Budi through July 31 only
 
   const surgery = [];
   const wound = [];
 
   // ── SURGERY PROVIDERS ───────────────────────────────
   // Dr. Kopriva: Mon weeks 1, 2, 5 — every Tue — every Fri
-  const koprMondays = [1, 2]; // always weeks 1 & 2
+  const koprMondays = [1, 2];
   if (dow === 1 && (koprMondays.includes(week) || isLastWeek)) {
     surgery.push({ name: "Dr. Kopriva", specialty: "Surgery Clinic" });
   }
@@ -271,13 +294,17 @@ function getProviders(date) {
     surgery.push({ name: "Dr. Kopriva", specialty: "Surgery Clinic" });
   }
 
-  // Dr. Budi: every Tue, Wed, Thu, Fri
-  if (dow >= 2 && dow <= 5) {
+  // Dr. Budi: every Tue, Wed, Thu, Fri — through July 31, 2026 only
+  if (dow >= 2 && dow <= 5 && date < budiEndDate) {
     surgery.push({ name: "Dr. Budi", specialty: "Surgery Clinic" });
   }
 
-  // Dr. Gabel: first Friday of the month
+  // Dr. Gabel: first Friday of each month (ongoing)
   if (dow === 5 && isFirstOccurrence(date)) {
+    surgery.push({ name: "Dr. Gabel", specialty: "Surgery Clinic" });
+  }
+  // Dr. Gabel: specific clinic dates Aug–Dec 2026
+  if (GABEL_CLINIC_DATES.has(key)) {
     surgery.push({ name: "Dr. Gabel", specialty: "Surgery Clinic" });
   }
 
