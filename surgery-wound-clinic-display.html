@@ -228,7 +228,7 @@
 //
 //  Dr. Kopriva   — Surgery — Mon (weeks 1, 2, 5), Tue, Fri
 //  Dr. Budi      — Surgery — Tue, Wed, Thu, Fri (through July 31, 2026 only)
-//  Dr. Gabel     — Surgery — First Friday of month (ongoing)
+//  Dr. Gabel     — Surgery — Every Wednesday + First Friday of month (ongoing)
 //                            + specific dates below (Aug–Dec 2026)
 //  Tina Benson   — Wound  — Every Monday
 //  Allie Keller  — Wound  — Every Thursday
@@ -297,6 +297,11 @@ function getProviders(date) {
   // Dr. Budi: every Tue, Wed, Thu, Fri — through July 31, 2026 only
   if (dow >= 2 && dow <= 5 && date < budiEndDate) {
     surgery.push({ name: "Dr. Budi", specialty: "Surgery Clinic" });
+  }
+
+  // Dr. Gabel: every Wednesday
+  if (dow === 3) {
+    surgery.push({ name: "Dr. Gabel", specialty: "Surgery Clinic" });
   }
 
   // Dr. Gabel: first Friday of each month (ongoing)
