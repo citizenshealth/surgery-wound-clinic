@@ -239,19 +239,16 @@
 //  Nov 11, Nov 25, Dec 2, Dec 16
 // ═══════════════════════════════════════════════════════════════
 
-// Hard-coded Dr. Gabel clinic dates (YYYY-MM-DD)
+// Hard-coded Dr. Gabel extra clinic dates (non-Wednesday, non-first-Friday)
 const GABEL_CLINIC_DATES = new Set([
-  "2026-08-14",
-  "2026-08-24",
-  "2026-08-27",
-  "2026-09-09",
-  "2026-09-23",
-  "2026-10-21",
-  "2026-10-28",
-  "2026-11-11",
-  "2026-11-25",
-  "2026-12-02",
-  "2026-12-16",
+  "2026-08-14",  // Friday (2nd)
+  "2026-08-24",  // Monday
+  "2026-08-27",  // Thursday
+]);
+
+// Dates when Dr. Gabel is absent (overrides the Wednesday/first-Friday rules)
+const GABEL_OFF_DATES = new Set([
+  "2026-09-30",  // Wed — out this day only
 ]);
 
 function pad(n) { return String(n).padStart(2, '0'); }
@@ -299,16 +296,17 @@ function getProviders(date) {
     surgery.push({ name: "Dr. Budi", specialty: "Surgery Clinic" });
   }
 
-  // Dr. Gabel: every Wednesday
-  if (dow === 3) {
+  // Dr. Gabel: every Wednesday (unless he's off that day)
+  if (dow === 3 && !GABEL_OFF_DATES.has(key)) {
     surgery.push({ name: "Dr. Gabel", specialty: "Surgery Clinic" });
   }
 
-  // Dr. Gabel: first Friday of each month (ongoing)
-  if (dow === 5 && isFirstOccurrence(date)) {
+  // Dr. Gabel: first Friday of each month (ongoing, unless he's off)
+  if (dow === 5 && isFirstOccurrence(date) && !GABEL_OFF_DATES.has(key)) {
     surgery.push({ name: "Dr. Gabel", specialty: "Surgery Clinic" });
   }
-  // Dr. Gabel: specific clinic dates Aug–Dec 2026
+
+  // Dr. Gabel: specific extra clinic dates
   if (GABEL_CLINIC_DATES.has(key)) {
     surgery.push({ name: "Dr. Gabel", specialty: "Surgery Clinic" });
   }
